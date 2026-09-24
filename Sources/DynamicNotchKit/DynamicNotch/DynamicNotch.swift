@@ -70,6 +70,11 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
     let expandedContent: Expanded
     let compactLeadingContent: CompactLeading
     let compactTrailingContent: CompactTrailing
+    /// Fills the notch shape while it's expanded, in place of the standard black (for
+    /// example a light material or Liquid Glass). The shape stays black while compact,
+    /// so it still blends into the camera housing. `nil` keeps black throughout.
+    @Published public var expandedBackground: AnyView?
+
     @Published var disableCompactLeading: Bool = false
     @Published var disableCompactTrailing: Bool = false
 

@@ -53,12 +53,24 @@ struct NotchView<Expanded, CompactLeading, CompactTrailing>: View where Expanded
         (compactTrailingWidth - compactLeadingWidth) / 2
     }
 
+    private var showsExpandedBackground: Bool {
+        dynamicNotch.state == .expanded && dynamicNotch.expandedBackground != nil
+    }
+
     var body: some View {
         notchContent()
             .background {
-                Rectangle()
-                    .foregroundStyle(.black)
-                    .padding(-50) // The opening/closing animation can overshoot, so this makes sure that it's still black
+                ZStack {
+                    Rectangle()
+                        .foregroundStyle(.black)
+                        .opacity(showsExpandedBackground ? 0 : 1)
+                    if let expandedBackground = dynamicNotch.expandedBackground {
+                        expandedBackground
+                            .opacity(showsExpandedBackground ? 1 : 0)
+                    }
+                }
+                .padding(-50) // The opening/closing animation can overshoot, so this makes sure that it's still filled
+                .animation(.smooth, value: showsExpandedBackground)
             }
             .mask {
                 NotchShape(
