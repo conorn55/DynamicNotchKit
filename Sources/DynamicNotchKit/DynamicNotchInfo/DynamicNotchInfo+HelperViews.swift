@@ -22,7 +22,8 @@ extension DynamicNotchInfo {
                 .matchedGeometryEffect(
                     id: "info_icon",
                     in: dynamicNotch.internalDynamicNotch.namespace ?? namespace,
-                    isSource: dynamicNotch.internalDynamicNotch.state == .compact && dynamicNotch.shouldSkipHideWhenConverting
+                    isSource: dynamicNotch.internalDynamicNotch.state == .compact
+                        && dynamicNotch.shouldSkipHideWhenConverting
                 )
         }
     }
@@ -56,7 +57,8 @@ extension DynamicNotchInfo {
                         .matchedGeometryEffect(
                             id: "info_icon",
                             in: dynamicNotch.internalDynamicNotch.namespace ?? namespace,
-                            isSource: dynamicNotch.internalDynamicNotch.state == .expanded && dynamicNotch.shouldSkipHideWhenConverting
+                            isSource: dynamicNotch.internalDynamicNotch.state == .expanded
+                                && dynamicNotch.shouldSkipHideWhenConverting
                         )
                 }
 
@@ -77,7 +79,10 @@ extension DynamicNotchInfo {
                 if let description = dynamicNotch.description {
                     Text(description)
                         .font(.caption2)
-                        .foregroundStyle(dynamicNotch.textColor?.opacity(0.5) ?? (notchStyle.isNotch ? .white.opacity(0.5) : .secondary))
+                        .foregroundStyle(
+                            dynamicNotch.textColor?.opacity(0.5)
+                                ?? (notchStyle.isNotch ? .white.opacity(0.5) : .secondary)
+                        )
                 }
             }
         }

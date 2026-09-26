@@ -13,16 +13,19 @@ import SwiftUI
 /// A customizable, notch-styled window for macOS applications.
 ///
 /// ``DynamicNotch`` is the most flexible way to present custom windows using ``DynamicNotchKit``.
-/// It accepts SwiftUI views as input and renders them in a dynamic floating window, and is ideal when full control over the content is required.
+/// It accepts SwiftUI views as input and renders them in a dynamic floating window, and is ideal when full control over
+/// the content is required.
 ///
-/// Inspired by Apple’s Dynamic Island, ``DynamicNotch`` introduces a similar interface experience for macOS, with built-in support for *expanded* and *compact* display states.
+/// Inspired by Apple’s Dynamic Island, ``DynamicNotch`` introduces a similar interface experience for macOS, with
+/// built-in support for *expanded* and *compact* display states.
 ///
 /// ### Expanded State
 /// The expanded state is generally the largest view.
 /// It shows the full content view below the notch, and is also the view used when the window is floating.
 ///
 /// ### Compact State
-/// In the compact state, there is the leading content, which is shown on the left side of the notch, and the trailing content, which is shown on the right side of the notch.
+/// In the compact state, there is the leading content, which is shown on the left side of the notch, and the trailing
+/// content, which is shown on the right side of the notch.
 ///
 /// > When using the `floating` style, this framework does not support compact mode.
 /// > Calling ``compact(on:)`` on these devices will automatically hide the window.
@@ -53,7 +56,11 @@ import SwiftUI
 /// }
 /// ```
 ///
-public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: ObservableObject, DynamicNotchControllable where Expanded: View, CompactLeading: View, CompactTrailing: View {
+public final class DynamicNotch<
+    Expanded: View,
+    CompactLeading: View,
+    CompactTrailing: View
+>: ObservableObject, DynamicNotchControllable {
     /// Public in case user wants to modify the underlying NSPanel
     public var windowController: NSWindowController?
 
@@ -88,8 +95,10 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
 
     /// Creates a new DynamicNotch with custom content and style.
     /// - Parameters:
-    ///   - hoverBehavior: defines the hover behavior of the notch, which allows for different interactions such as haptic feedback, increased shadow etc.
-    ///   - style: the popover's style. If unspecified, the style will be automatically set according to the screen (notch or floating).
+    ///   - hoverBehavior: defines the hover behavior of the notch, which allows for different interactions such as
+    ///                    haptic feedback, increased shadow etc.
+    ///   - style: the popover's style. If unspecified, the style will be automatically set according to the screen
+    ///            (notch or floating).
     ///   - expanded: a SwiftUI View to be shown in the expanded state of the notch.
     ///   - compactLeading: a SwiftUI View to be shown in the compact leading state of the notch.
     ///   - compactTrailing: a SwiftUI View to be shown in the compact trailing state of the notch.
@@ -112,8 +121,10 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
 
     /// Creates a new DynamicNotch with custom content and style. Does not support the compact appearance.
     /// - Parameters:
-    ///   - hoverBehavior: defines the hover behavior of the notch, which allows for different interactions such as haptic feedback, increased shadow etc.
-    ///   - style: the popover's style. If unspecified, the style will be automatically set according to the screen (notch or floating).
+    ///   - hoverBehavior: defines the hover behavior of the notch, which allows for different interactions such as
+    ///                    haptic feedback, increased shadow etc.
+    ///   - style: the popover's style. If unspecified, the style will be automatically set according to the screen
+    ///            (notch or floating).
     ///   - expanded: a SwiftUI View to be shown in the expanded state of the notch.
     public convenience init(
         hoverBehavior: DynamicNotchHoverBehavior = [.keepVisible],
@@ -134,7 +145,9 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
     /// Observes screen parameters changes and re-initializes the window if necessary.
     private func observeScreenParameters() {
         Task {
-            let sequence = NotificationCenter.default.notifications(named: NSApplication.didChangeScreenParametersNotification)
+            let sequence = NotificationCenter.default.notifications(
+                named: NSApplication.didChangeScreenParametersNotification
+            )
             for await _ in sequence.map(\.name) {
                 if let screen = NSScreen.screens.first {
                     initializeWindow(screen: screen)
@@ -162,10 +175,10 @@ public final class DynamicNotch<Expanded, CompactLeading, CompactTrailing>: Obse
 
 extension DynamicNotch {
     public func expand(on screen: NSScreen = NSScreen.screens[0]) async {
-        await _expand(on: screen, skipHide: false)
+        await expandNotch(on: screen, skipHide: false)
     }
 
-    func _expand(on screen: NSScreen = NSScreen.screens[0], skipHide: Bool) async {
+    func expandNotch(on screen: NSScreen = NSScreen.screens[0], skipHide: Bool) async {
         guard state != .expanded else { return }
 
         closePanelTask?.cancel()
@@ -201,10 +214,10 @@ extension DynamicNotch {
     }
 
     public func compact(on screen: NSScreen = NSScreen.screens[0]) async {
-        await _compact(on: screen, skipHide: false)
+        await compactNotch(on: screen, skipHide: false)
     }
 
-    func _compact(on screen: NSScreen = NSScreen.screens[0], skipHide: Bool) async {
+    func compactNotch(on screen: NSScreen = NSScreen.screens[0], skipHide: Bool) async {
         guard state != .compact else { return }
 
         if effectiveStyle(for: screen).isFloating {
@@ -251,14 +264,14 @@ extension DynamicNotch {
 
     public func hide() async {
         await withCheckedContinuation { continuation in
-            _hide {
+            hideNotch {
                 continuation.resume()
             }
         }
     }
 
     /// Hides the popup, with a completion handler when the animation is completed.
-    func _hide(completion: (() -> ())? = nil) {
+    func hideNotch(completion: (() -> Void)? = nil) {
         guard state != .hidden else {
             completion?()
             return
@@ -267,7 +280,7 @@ extension DynamicNotch {
         if hoverBehavior.contains(.keepVisible), isHovering {
             Task {
                 try? await Task.sleep(for: .seconds(0.1))
-                _hide(completion: completion)
+                hideNotch(completion: completion)
             }
             return
         }

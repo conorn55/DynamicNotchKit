@@ -14,12 +14,15 @@ import SwiftUI
 /// This class is a wrapper around `DynamicNotch` that provides a simple way to present information to the user.
 /// It is designed to be easy to use and provide a clean and simple way to present information.
 ///
-/// On top of this, it provides refined animations when transitioning between the expanded and compact states using `matchedGeometryEffect` (note that this is not in all cases; refer to your initializer for more details).
+/// On top of this, it provides refined animations when transitioning between the expanded and compact states using
+/// `matchedGeometryEffect` (note that this is not in all cases; refer to your initializer for more details).
 ///
 /// ## Compared to DynamicNotch
 ///
-/// Instead of providing your own SwiftUI content, `DynamicNotchInfo` provides a set of predefined views that are automatically used in the expanded and compact states.
-/// This makes it easy to use and provides a consistent look and feel, as all predefined views are designed to both look and feel native.
+/// Instead of providing your own SwiftUI content, `DynamicNotchInfo` provides a set of predefined views that are
+/// automatically used in the expanded and compact states.
+/// This makes it easy to use and provides a consistent look and feel, as all predefined views are designed to both look
+/// and feel native.
 /// Refer to ``Label`` for available options for preset views.
 ///
 /// ## Usage
@@ -63,11 +66,16 @@ public final class DynamicNotchInfo: ObservableObject, DynamicNotchControllable 
     /// - Parameters:
     ///   - icon: the icon to display in the expanded state of the notch.
     ///   - title: the title to display in the expanded state of the notch.
-    ///   - description: the description to display in the expanded state of the notch. If unspecified, no description will be displayed.
-    ///   - compactLeading: the icon to display in the compact leading state of the notch. If unspecified, the expanded icon will be displayed.
-    ///   - compactTrailing: the icon to display in the compact trailing state of the notch. If unspecified, no icon will be displayed.
-    ///   - hoverBehavior: the hover behavior of the notch, which allows for different interactions such as haptic feedback, increased shadow etc.
-    ///   - style: the popover's style. If unspecified, the style will be automatically set according to the screen (notch or floating).
+    ///   - description: the description to display in the expanded state of the notch. If unspecified, no description
+    ///                  will be displayed.
+    ///   - compactLeading: the icon to display in the compact leading state of the notch. If unspecified, the expanded
+    ///                     icon will be displayed.
+    ///   - compactTrailing: the icon to display in the compact trailing state of the notch. If unspecified, no icon
+    ///                      will be displayed.
+    ///   - hoverBehavior: the hover behavior of the notch, which allows for different interactions such as haptic
+    ///                    feedback, increased shadow etc.
+    ///   - style: the popover's style. If unspecified, the style will be automatically set according to the screen
+    ///            (notch or floating).
     public init(
         icon: DynamicNotchInfo.Label?,
         title: LocalizedStringKey,
@@ -102,7 +110,7 @@ public final class DynamicNotchInfo: ObservableObject, DynamicNotchControllable 
     public func expand(
         on screen: NSScreen = NSScreen.screens[0]
     ) async {
-        await internalDynamicNotch._expand(
+        await internalDynamicNotch.expandNotch(
             on: screen,
             skipHide: shouldSkipHideWhenConverting
         )
@@ -111,7 +119,7 @@ public final class DynamicNotchInfo: ObservableObject, DynamicNotchControllable 
     public func compact(
         on screen: NSScreen = NSScreen.screens[0]
     ) async {
-        await internalDynamicNotch._compact(
+        await internalDynamicNotch.compactNotch(
             on: screen,
             skipHide: shouldSkipHideWhenConverting
         )

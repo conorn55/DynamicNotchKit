@@ -10,7 +10,8 @@ import SwiftUI
 /// The style of a DynamicNotch.
 ///
 /// The style determines how the notch appears on the screen.
-/// It is generally recommended to use the ``auto`` style, which will automatically choose the best style based on the screen size.
+/// It is generally recommended to use the ``auto`` style, which will automatically choose the best style based on the
+/// screen size.
 /// However, you can also use the ``notch`` or ``floating`` styles to force the notch to appear in a specific way.
 ///
 /// ## Complex Usage

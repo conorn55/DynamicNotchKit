@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NotchContentView<Expanded, CompactLeading, CompactTrailing>: View where Expanded: View, CompactLeading: View, CompactTrailing: View {
+struct NotchContentView<Expanded: View, CompactLeading: View, CompactTrailing: View>: View {
     @ObservedObject private var dynamicNotch: DynamicNotch<Expanded, CompactLeading, CompactTrailing>
     @Namespace private var namespace
     private let style: DynamicNotchStyle

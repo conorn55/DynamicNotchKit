@@ -8,8 +8,10 @@ extension Tag {
 }
 
 /// Hey there! Looks like you found DynamicNotchKit's tests.
-/// Please note that these tests do NOT actually "test" anything. They are only here to serve as examples of usage of DynamicNotchKit.
-/// To run these tests, simply `cd` into the `DynamicNotchKit` directory and run `swift test`. Alternatively, open this package directly in Xcode, and the tests should show up in the sidebar.
+/// Please note that these tests do NOT actually "test" anything. They are only here to serve as examples of usage of
+/// DynamicNotchKit.
+/// To run these tests, simply `cd` into the `DynamicNotchKit` directory and run `swift test`. Alternatively, open this
+/// package directly in Xcode, and the tests should show up in the sidebar.
 @MainActor
 @Suite(.serialized)
 struct DynamicNotchKitTests {
@@ -17,15 +19,15 @@ struct DynamicNotchKitTests {
 
     @Test("Info - Simple notch style", .tags(.notchStyle))
     func dynamicNotchInfoSimpleNotchStyle() async throws {
-        try await _dynamicNotchInfoSimple(with: .notch)
+        try await rundynamicNotchInfoSimple(with: .notch)
     }
 
     @Test("Info - Simple floating style", .tags(.floatingStyle))
     func dynamicNotchInfoSimpleFloatingStyle() async throws {
-        try await _dynamicNotchInfoSimple(with: .floating)
+        try await rundynamicNotchInfoSimple(with: .floating)
     }
 
-    func _dynamicNotchInfoSimple(with style: DynamicNotchStyle) async throws {
+    func rundynamicNotchInfoSimple(with style: DynamicNotchStyle) async throws {
         let notch = DynamicNotchInfo(
             icon: .init(systemName: "info.circle"),
             title: "This is `DynamicNotchInfo`",
@@ -52,15 +54,15 @@ struct DynamicNotchKitTests {
 
     @Test("Info - Advanced notch style", .tags(.notchStyle))
     func dynamicNotchInfoAdvancedNotchStyle() async throws {
-        try await _dynamicNotchInfoAdvanced(with: .notch)
+        try await rundynamicNotchInfoAdvanced(with: .notch)
     }
 
     @Test("Info - Advanced floating style", .tags(.floatingStyle))
     func dynamicNotchInfoAdvancedFloatingStyle() async throws {
-        try await _dynamicNotchInfoAdvanced(with: .floating)
+        try await rundynamicNotchInfoAdvanced(with: .floating)
     }
 
-    func _dynamicNotchInfoAdvanced(with style: DynamicNotchStyle) async throws {
+    func rundynamicNotchInfoAdvanced(with style: DynamicNotchStyle) async throws {
         let notch = DynamicNotchInfo(
             icon: .init(systemName: "info.circle"),
             title: "`DynamicNotchInfo`: advanced usage",
@@ -114,15 +116,19 @@ struct DynamicNotchKitTests {
 
     @Test("Info - Custom notch style & gradient", .tags(.notchStyle))
     func dynamicNotchInfoCustomNotchStyle() async throws {
-        try await _dynamicNotchInfoGradientCustomRadii(with: .notch(topCornerRadius: 10, bottomCornerRadius: 25))
+        try await rundynamicNotchInfoGradientCustomRadii(with: .notch(topCornerRadius: 10, bottomCornerRadius: 25))
     }
 
-    @Test("Info - Custom floating style & gradient", .tags(.floatingStyle), .disabled("Compact mode does not support floating windows"))
+    @Test(
+        "Info - Custom floating style & gradient",
+        .tags(.floatingStyle),
+        .disabled("Compact mode does not support floating windows")
+    )
     func dynamicNotchInfoCustomFloatingStyle() async throws {
-        try await _dynamicNotchInfoGradientCustomRadii(with: .floating(cornerRadius: 25))
+        try await rundynamicNotchInfoGradientCustomRadii(with: .floating(cornerRadius: 25))
     }
 
-    func _dynamicNotchInfoGradientCustomRadii(with style: DynamicNotchStyle) async throws {
+    func rundynamicNotchInfoGradientCustomRadii(with style: DynamicNotchStyle) async throws {
         let notch = DynamicNotchInfo(
             icon: .init {
                 LinearGradient(
@@ -131,7 +137,7 @@ struct DynamicNotchKitTests {
                     endPoint: .bottomTrailing
                 )
                 .clipShape(.rect(cornerRadius: 4))
-                .aspectRatio(contentMode: .fit)
+                .scaledToFit()
             },
             title: "This a gradient!",
             description: "It ships with a `matchedGeometryEffect` for easy animations.",
@@ -153,15 +159,19 @@ struct DynamicNotchKitTests {
 
     @Test("Info - Notch with custom icon", .tags(.notchStyle))
     func dynamicNotchInfoAppIcon() async throws {
-        try await _testInfoWithAppIcon(with: .notch)
+        try await runtestInfoWithAppIcon(with: .notch)
     }
 
-    @Test("Info - Floating with custom icon", .tags(.floatingStyle), .disabled("Compact mode does not support floating windows"))
+    @Test(
+        "Info - Floating with custom icon",
+        .tags(.floatingStyle),
+        .disabled("Compact mode does not support floating windows")
+    )
     func dynamicNotchInfoAppIconFloating() async throws {
-        try await _testInfoWithAppIcon(with: .floating)
+        try await runtestInfoWithAppIcon(with: .floating)
     }
 
-    func _testInfoWithAppIcon(with style: DynamicNotchStyle) async throws {
+    func runtestInfoWithAppIcon(with style: DynamicNotchStyle) async throws {
         let notch = DynamicNotchInfo(
             icon: .init(image: Image(nsImage: NSImage(named: NSImage.applicationIconName)!)),
             title: "We support custom icons as well!",
@@ -183,10 +193,10 @@ struct DynamicNotchKitTests {
 
     @Test("Info - Notch with changing compact icons", .tags(.notchStyle))
     func dynamicNotchInfoCompactIcons() async throws {
-        try await _testDifferentCompactIcons(with: .notch)
+        try await runtestDifferentCompactIcons(with: .notch)
     }
 
-    func _testDifferentCompactIcons(with style: DynamicNotchStyle) async throws {
+    func runtestDifferentCompactIcons(with style: DynamicNotchStyle) async throws {
         let notch = DynamicNotchInfo(
             icon: .init(systemName: "info.circle"),
             title: "Compact icons can change!",
@@ -225,19 +235,19 @@ struct DynamicNotchKitTests {
 
     @Test("DynamicNotch - Usage showcase - Notch style", .tags(.notchStyle))
     func dynamicNotchShowcaseNotchStyle() async throws {
-        try await _dynamicNotchShowcase(with: .notch)
+        try await rundynamicNotchShowcase(with: .notch)
     }
 
     @Test("DynamicNotch - Usage showcase - Floating style", .tags(.floatingStyle))
     func dynamicNotchShowcaseFloatingStyle() async throws {
-        try await _dynamicNotchShowcase(with: .floating)
+        try await rundynamicNotchShowcase(with: .floating)
     }
 
-    func _dynamicNotchShowcase(with style: DynamicNotchStyle) async throws {
+    func rundynamicNotchShowcase(with style: DynamicNotchStyle) async throws {
         let notch = DynamicNotch(style: style) {
             VStack(spacing: 10) {
-                ForEach(0 ..< 10) { i in
-                    Text("Hello World \(i)")
+                ForEach(0 ..< 10) { index in
+                    Text("Hello World \(index)")
                 }
             }
         } compactLeading: {
@@ -258,10 +268,10 @@ struct DynamicNotchKitTests {
 
     @Test("DynamicNotch - Rapid Fire", .tags(.notchStyle))
     func dynamicNotchRapidFire() async throws {
-        for i in 0 ..< 30 {
+        for attempt in 0 ..< 30 {
             let notch = DynamicNotchInfo(
                 icon: .init(systemName: "gauge.with.dots.needle.100percent"),
-                title: "Rapid Fire Test \(i + 1)"
+                title: "Rapid Fire Test \(attempt + 1)"
             )
 
             await notch.expand()

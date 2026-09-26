@@ -35,9 +35,9 @@ extension AnyTransition {
         )
     }
 
-    static func scale(x: CGFloat = 1, y: CGFloat = 1, anchor: UnitPoint = .center) -> AnyTransition {
+    static func scale(x xScale: CGFloat = 1, y yScale: CGFloat = 1, anchor: UnitPoint = .center) -> AnyTransition {
         .modifier(
-            active: ScaleModifier(xScale: x, yScale: y, anchor: anchor),
+            active: ScaleModifier(xScale: xScale, yScale: yScale, anchor: anchor),
             identity: ScaleModifier(xScale: 1, yScale: 1, anchor: anchor)
         )
     }

@@ -10,7 +10,8 @@ import Foundation
 /// Defines the behavior of the notch when hovered over.
 ///
 /// Currently, there are limited behaviors available.
-/// In ``DynamicNotch`` and ``DynamicNotchInfo``, ``all`` is used by default, and there is likely no configuration required on your end.
+/// In ``DynamicNotch`` and ``DynamicNotchInfo``, ``all`` is used by default, and there is likely no configuration
+/// required on your end.
 ///
 /// If there is more behaviors you wish to see, please open an issue on the GitHub repository!
 ///

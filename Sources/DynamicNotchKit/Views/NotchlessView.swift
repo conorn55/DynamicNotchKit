@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NotchlessView<Expanded, CompactLeading, CompactTrailing>: View where Expanded: View, CompactLeading: View, CompactTrailing: View {
+struct NotchlessView<Expanded: View, CompactLeading: View, CompactTrailing: View>: View {
     @ObservedObject private var dynamicNotch: DynamicNotch<Expanded, CompactLeading, CompactTrailing>
     @State private var windowHeight: CGFloat = 0
     private let safeAreaInset: CGFloat = 15
