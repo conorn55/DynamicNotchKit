@@ -84,9 +84,15 @@ struct NotchView<Expanded: View, CompactLeading: View, CompactTrailing: View>: V
                 )
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
             }
-            // Not animated when the compact content changes width: NotchPom draws its progress
-            // outline in a separate window that jumps straight to the new size, so an animated
-            // shape would slide in underneath it.
+            .overlay {
+                if let compactOverlay = dynamicNotch.compactOverlay {
+                    compactOverlay
+                        .opacity(dynamicNotch.state == .compact ? 1 : 0)
+                        .allowsHitTesting(false)
+                }
+            }
+            // Not animated when the compact content changes width, so the shape and its
+            // overlay snap to the new size together.
             .offset(x: xOffset)
     }
 

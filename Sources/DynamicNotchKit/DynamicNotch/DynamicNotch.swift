@@ -81,6 +81,10 @@ public final class DynamicNotch<
     /// example a light material or Liquid Glass). The shape stays black while compact,
     /// so it still blends into the camera housing. `nil` keeps black throughout.
     @Published public var expandedBackground: AnyView?
+    /// Drawn over the notch shape while it's compact, and not clipped by it, so it can
+    /// sit around the outside (NotchPom's progress outline). It's sized to the shape
+    /// and grows, shrinks and fades with the notch's own animations. `nil` draws nothing.
+    @Published public var compactOverlay: AnyView?
 
     @Published var disableCompactLeading: Bool = false
     @Published var disableCompactTrailing: Bool = false
